@@ -1,13 +1,14 @@
 <template>
-  <router-link class="v-card" :to="`/video/${video.id}`">
+  <!-- <router-link class="v-card" :to="`/video/${video.id}`" @click="toPlay(video.id)"> -->
+  <div class="v-card" @click="toPlay(video.id)">
     <div class="card">
       <div class="card-img">
-        <img :src="video.imgSrc"/>
+        <img :src="video.imgSrc" />
       </div>
       <div class="count">
         <span>
           <i class="iconfont icon_shipin_bofangshu"></i>
-          {{video.playCount}}
+          {{ video.playCount }}
         </span>
         <span>
           <i class="iconfont icon_shipin_danmushu"></i>
@@ -15,12 +16,14 @@
         </span>
       </div>
     </div>
-    <p class="title">{{video.desc}}</p>
-  </router-link>
+    <p class="title">{{ video.desc }}</p>
+  </div>
+  <!-- </router-link> -->
 </template>
 
 <script setup lang="ts">
 import { defineProps, PropType } from 'vue'
+import { useRouter } from 'vue-router'
 interface IVideoItem {
   id: number
   imgSrc: string
@@ -38,6 +41,13 @@ defineProps({
     required: true
   }
 })
+// 定义路由实例
+const $router = useRouter()
+// 点击事件定义
+function toPlay (id: number) {
+  console.log('点击事件定义', id)
+  $router.push({ path: `/video/${id}` })
+}
 </script>
 
 <style lang="less" scoped>
@@ -56,7 +66,7 @@ defineProps({
     img {
       height: 100px;
       width: 100%;
-      object-fit: cover;// 保持图片原来的比例
+      object-fit: cover; // 保持图片原来的比例
     }
   }
   .count {
